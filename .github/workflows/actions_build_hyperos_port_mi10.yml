@@ -101,14 +101,12 @@ jobs:
             SHARE_LINK=$(rclone link onedrive:/ROM/github-actions/ --onedrive-link-scope anonymous)
             touch file.log
             echo -e "Onedrive下载链接 | Onedrive alternate download link: \n $SHARE_LINK" > file.log
-     
-      - name: 10. 上传到Github Release| UPLOAD ROM TO GITHUB RELEASAE
+
+      - name: 上传到Github Release | UPLOAD ROM TO GITHUB RELEASAE
+        uses: softprops/action-gh-release@master
         if: ${{  github.event.inputs.GITHUBRELEASE == 'TRUE' }}
-        uses: ncipollo/release-action@main
         with:
-          artifacts: ${{ github.workspace }}/hyperos_port/GithubRelease/*
           name: ${{ env.OS_VERSION }}
-          tag: ${{ env.OS_VERSION }}
-          bodyFile: "${{ github.workspace }}/file.log"
-          allowUpdates: true
-          artifactErrorsFailBuild: true
+          tag_name: ${{ env.OS_VERSION }}
+          body_path: ${{ github.workspace }}/file.log
+          files: ${{ github.workspace }}/hyperos_port/GithubRelease/*
