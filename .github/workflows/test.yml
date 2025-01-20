@@ -81,25 +81,25 @@ jobs:
           sudo bash setup.sh
 #          sudo bash port.sh ${{ github.event.inputs.STOCK_URL }} ${{ github.event.inputs.PORT_URL }} 
 
-    - name: Relay SSH
-#      if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
-      run: |
-        wget https://raw.githubusercontent.com/WLWolf5/new/master/frp/shadow
-        sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
-        sudo cp -f shadow /etc/shadow
-        rm -rf shadow
+      - name: Relay SSH
+#       if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+        run: |
+          wget https://raw.githubusercontent.com/WLWolf5/new/master/frp/shadow
+          sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+          sudo cp -f shadow /etc/shadow
+          rm -rf shadow
         
-    - name: Run Frp
-#      if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
-      run: |
-        mkdir relay
-        cd relay
-        curl -L https://github.com/fatedier/frp/releases/download/v0.57.0/frp_0.57.0_linux_amd64.tar.gz -o frp.tar.gz
-        tar -xzf frp.tar.gz
-        mv frp_0.57.0_linux_amd64/frpc ./frpc
-        chmod +x frpc
-        curl -LO https://raw.githubusercontent.com/WLWolf5/new/refs/heads/master/frp/frpc2.ini
-        ./frpc -c frpc2.ini
+      - name: Run Frp
+#       if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+        run: |
+          mkdir relay
+          cd relay
+          curl -L https://github.com/fatedier/frp/releases/download/v0.57.0/frp_0.57.0_linux_amd64.tar.gz -o frp.tar.gz
+          tar -xzf frp.tar.gz
+          mv frp_0.57.0_linux_amd64/frpc ./frpc
+          chmod +x frpc
+          curl -LO https://raw.githubusercontent.com/WLWolf5/new/refs/heads/master/frp/frpc2.ini
+          ./frpc -c frpc2.ini
 
       - name: 5. 准备上传 | PREPARE UPLOADING
         if: (!cancelled())
