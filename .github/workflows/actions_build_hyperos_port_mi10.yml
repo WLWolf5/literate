@@ -91,6 +91,7 @@ jobs:
           mkdir -p "$GITHUB_WORKSPACE"/hyperos_port/GithubRelease
           cd "$GITHUB_WORKSPACE"/hyperos_port/GithubRelease
           sudo split -b 1536M -d "$GITHUB_WORKSPACE"/hyperos_port/out/$ROM_FILE $ROM_FILE
+          sudo chmod -R 777 "$GITHUB_WORKSPACE"/hyperos_port/GithubRelease
           ls -al "$GITHUB_WORKSPACE"/hyperos_port/GithubRelease/
      
       - name: 9. 上传到OneDrive | PUSH ROM TO ONEDRIVE
