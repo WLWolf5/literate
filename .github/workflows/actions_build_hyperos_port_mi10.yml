@@ -104,9 +104,12 @@ jobs:
 
       - name: 上传到Github Release | UPLOAD ROM TO GITHUB RELEASAE
         uses: softprops/action-gh-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{  github.event.inputs.GITHUBRELEASE == 'TRUE' }}
         with:
           name: ${{ env.OS_VERSION }}
           tag_name: ${{ env.OS_VERSION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           body_path: ${{ github.workspace }}/file.log
           files: ${{ github.workspace }}/hyperos_port/GithubRelease/*
